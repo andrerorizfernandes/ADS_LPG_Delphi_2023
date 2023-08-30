@@ -7,6 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
+  TTipoOperacao = (topSomar = 0, topSubtrair = 1, topMultiplicar = 2, topDividir = 3);
+
   TfrmPrincipal = class(TForm)
     gbxControles: TGroupBox;
     gbxResultado: TGroupBox;
@@ -18,14 +20,23 @@ type
     edtValor2: TEdit;
     cboOperacao: TComboBox;
     lbxResultado: TListBox;
+    btnLimpar: TButton;
     procedure FormActivate(Sender: TObject);
     procedure btnCalcularClick(Sender: TObject);
+    procedure cboOperacaoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btnLimparClick(Sender: TObject);
   private
     procedure PreencherOperacoes;
     procedure LimparOperacoes;
     procedure ValidarDados;
     procedure Calcular(pValor1, pValor2: Integer);
-    procedure AdicionarResultado(pMensagem: string);
+    procedure AdicionarResultado(
+      pNomeDaOperacao: string;
+      pValor1, pValor2: Integer;
+      pResultado: Real);
+    procedure RealizarCalculo;
+    procedure LimparTela;
     function Somar(pValor1, pValor2: Integer): Integer;
     function Subtrair(pValor1, pValor2: Integer): Integer;
     function Multiplicar(pValor1, pValor2: Integer): Integer;
@@ -44,43 +55,63 @@ implementation
 
 { TfrmPrincipal }
 
-procedure TfrmPrincipal.AdicionarResultado(pMensagem: string);
+procedure TfrmPrincipal.AdicionarResultado(
+  pNomeDaOperacao: string;
+  pValor1, pValor2: Integer;
+  pResultado: Real);
+const
+  MENSAGEM = 'A %s de %d com %d é %f';
+var
+  lNomeDaOperacao: string;
 begin
-  lbxResultado.Items.Add(pMensagem);
+  lbxResultado.Items.Add(Format(
+    MENSAGEM,
+    [pNomeDaOperacao, pValor1, pValor2, pResultado]));
 end;
 
 procedure TfrmPrincipal.btnCalcularClick(Sender: TObject);
 begin
-  ValidarDados;
-  Calcular(StrToInt(edtValor1.Text), StrToInt(edtValor2.Text));
+  RealizarCalculo;
+end;
+
+procedure TfrmPrincipal.btnLimparClick(Sender: TObject);
+begin
+  LimparTela;
 end;
 
 procedure TfrmPrincipal.Calcular(pValor1, pValor2: Integer);
 var
   lResultado: Real;
 begin
-  case cboOperacao.ItemIndex of
-    0: begin
+  case TTipoOperacao(cboOperacao.ItemIndex) of
+    topSomar:
+       begin
          lResultado := Somar(pValor1, pValor2);
-         AdicionarResultado('A soma de ' + IntToStr(pValor1) + ' com ' + IntToStr(pValor2) +
-           ' é ' + FloatToStr(lResultado));
+         AdicionarResultado('somar', pValor1, pValor2, lResultado);
        end;
-    1: begin
+    topSubtrair:
+       begin
          lResultado := Subtrair(pValor1, pValor2);
-         AdicionarResultado('A subtração de ' + IntToStr(pValor1) + ' com ' + IntToStr(pValor2) +
-           ' é ' + FloatToStr(lResultado));
+         AdicionarResultado('subtrair', pValor1, pValor2, lResultado);
        end;
-    2: begin
+    topMultiplicar:
+       begin
          lResultado := Multiplicar(pValor1, pValor2);
-         AdicionarResultado('A multiplicação de ' + IntToStr(pValor1) + ' com ' + IntToStr(pValor2) +
-           ' é ' + FloatToStr(lResultado));
+         AdicionarResultado('multiplicar', pValor1, pValor2, lResultado);
        end;
-    3: begin
+    topDividir:
+       begin
          lResultado := Dividir(pValor1, pValor2);
-         AdicionarResultado('A divisão de ' + IntToStr(pValor1) + ' com ' + IntToStr(pValor2) +
-           ' é ' + FloatToStr(lResultado));
+         AdicionarResultado('dividir', pValor1, pValor2, lResultado);
        end;
   end;
+end;
+
+procedure TfrmPrincipal.cboOperacaoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = 13 then
+    RealizarCalculo;
 end;
 
 function TfrmPrincipal.Dividir(pValor1, pValor2: Integer): Real;
@@ -101,6 +132,13 @@ begin
   cboOperacao.ItemIndex := -1;
 end;
 
+procedure TfrmPrincipal.LimparTela;
+begin
+  LimparOperacoes;
+  lbxResultado.Items.Clear;
+  edtValor1.SetFocus;
+end;
+
 function TfrmPrincipal.Multiplicar(pValor1, pValor2: Integer): Integer;
 begin
   Result := pValor1 * pValor2;
@@ -118,6 +156,12 @@ begin
   cboOperacao.Items.Add(SUBTRAIR);
   cboOperacao.Items.Add(MULTIPLICAR);
   cboOperacao.Items.Add(DIVIDIR);
+end;
+
+procedure TfrmPrincipal.RealizarCalculo;
+begin
+  ValidarDados;
+  Calcular(StrToInt(edtValor1.Text), StrToInt(edtValor2.Text));
 end;
 
 function TfrmPrincipal.Somar(pValor1, pValor2: Integer): Integer;

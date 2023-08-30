@@ -71,6 +71,7 @@ object frmPrincipal: TfrmPrincipal
       Height = 21
       Style = csDropDownList
       TabOrder = 2
+      OnKeyDown = cboOperacaoKeyDown
     end
   end
   object gbxResultado: TGroupBox
@@ -91,22 +92,33 @@ object frmPrincipal: TfrmPrincipal
       Enabled = False
       ItemHeight = 13
       TabOrder = 0
-      ExplicitLeft = 112
-      ExplicitTop = 40
-      ExplicitWidth = 121
-      ExplicitHeight = 97
     end
   end
   object btnCalcular: TButton
+    Left = 323
+    Top = 241
+    Width = 101
+    Height = 35
+    Hint = 'Clique aqui para calcular'
+    Align = alRight
+    Caption = '&Calcular'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    OnClick = btnCalcularClick
+    ExplicitLeft = 424
+  end
+  object btnLimpar: TButton
     Left = 424
     Top = 241
     Width = 101
     Height = 35
+    Hint = 'Clique aqui para limpar os dados da tela'
     Align = alRight
-    Caption = 'Calcular'
-    TabOrder = 2
-    OnClick = btnCalcularClick
-    ExplicitTop = 242
-    ExplicitHeight = 34
+    Caption = '&Limpar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+    OnClick = btnLimparClick
   end
 end
