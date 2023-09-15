@@ -4,7 +4,9 @@ uses
   Vcl.Forms,
   uPrincipal in 'uPrincipal.pas' {frmPrincipal},
   uDM in 'uDM.pas' {DM: TDataModule},
-  uListarCidade in 'uListarCidade.pas' {frmListarCidade};
+  uListarCidade in 'uListarCidade.pas' {frmListarCidade},
+  uFuncoes in 'uFuncoes.pas',
+  uCidade in 'uCidade.pas' {frmCidade};
 
 {$R *.res}
 
