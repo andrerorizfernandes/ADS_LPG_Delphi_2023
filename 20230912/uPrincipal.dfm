@@ -2839,9 +2839,6 @@ object frmPrincipal: TfrmPrincipal
       item
         Width = 50
       end>
-    ExplicitLeft = 272
-    ExplicitTop = 264
-    ExplicitWidth = 0
   end
   object tmrPrincipal: TTimer
     OnTimer = tmrPrincipalTimer
@@ -2859,6 +2856,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Cliente1: TMenuItem
         Caption = 'C&liente'
+        OnClick = Cliente1Click
       end
     end
     object Operaes1: TMenuItem

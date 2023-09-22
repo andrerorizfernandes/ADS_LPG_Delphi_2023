@@ -6,7 +6,9 @@ uses
   uDM in 'uDM.pas' {DM: TDataModule},
   uListarCidade in 'uListarCidade.pas' {frmListarCidade},
   uFuncoes in 'uFuncoes.pas',
-  uCidade in 'uCidade.pas' {frmCidade};
+  uCidade in 'uCidade.pas' {frmCidade},
+  uTipoOperacao in 'uTipoOperacao.pas',
+  uListarCliente in 'uListarCliente.pas' {frmListarCliente};
 
 {$R *.res}
 

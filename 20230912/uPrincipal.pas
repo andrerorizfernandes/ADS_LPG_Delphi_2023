@@ -20,9 +20,11 @@ type
     Venda1: TMenuItem;
     procedure tmrPrincipalTimer(Sender: TObject);
     procedure Cidade1Click(Sender: TObject);
+    procedure Cliente1Click(Sender: TObject);
   private
     procedure PreencherDadosInformativos;
     procedure ListarCidades;
+    procedure ListarClientes;
     { Private declarations }
   public
     { Public declarations }
@@ -34,13 +36,18 @@ var
 implementation
 
 uses
-  uListarCidade;
+  uListarCidade, uListarCliente;
 
 {$R *.dfm}
 
 procedure TfrmPrincipal.Cidade1Click(Sender: TObject);
 begin
   ListarCidades;
+end;
+
+procedure TfrmPrincipal.Cliente1Click(Sender: TObject);
+begin
+  ListarClientes;
 end;
 
 procedure TfrmPrincipal.ListarCidades;
@@ -53,6 +60,19 @@ begin
   finally
     lTelaListarCidade.Free;
   end;
+end;
+
+procedure TfrmPrincipal.ListarClientes;
+var
+  lTelaListarCliente: TfrmListarCliente;
+begin
+  lTelaListarCliente := TfrmListarCliente.Create(nil);
+  try
+    lTelaListarCliente.ShowModal;
+  finally
+    lTelaListarCliente.Free;
+  end;
+
 end;
 
 procedure TfrmPrincipal.PreencherDadosInformativos;

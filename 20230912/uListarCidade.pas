@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, uCidade;
+  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, uCidade, uTipoOperacao;
 
 type
   TfrmListarCidade = class(TForm)
@@ -20,9 +20,10 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
+    procedure dbgListarCidadeDblClick(Sender: TObject);
   private
     procedure ExcluirCidade;
-    procedure ControlarVisibilidadeDoBotaoExcluir;
+    procedure ControlarVisibilidadeDosBotoes;
     procedure AbrirCadastroDeCidade(const pTipoOperacao: TTipoOperacao);
     { Private declarations }
   public
@@ -43,22 +44,32 @@ end;
 procedure TfrmListarCidade.btnExcluirClick(Sender: TObject);
 begin
   ExcluirCidade;
-  ControlarVisibilidadeDoBotaoExcluir;
+  ControlarVisibilidadeDosBotoes;
 end;
 
 procedure TfrmListarCidade.btnInserirClick(Sender: TObject);
 begin
   AbrirCadastroDeCidade(topInserir);
+  ControlarVisibilidadeDosBotoes;
 end;
 
-procedure TfrmListarCidade.ControlarVisibilidadeDoBotaoExcluir;
+procedure TfrmListarCidade.ControlarVisibilidadeDosBotoes;
 begin
+  btnEditar.Enabled := (not DM.qryCidade.IsEmpty);
   btnExcluir.Enabled := (not DM.qryCidade.IsEmpty);
+end;
+
+procedure TfrmListarCidade.dbgListarCidadeDblClick(Sender: TObject);
+begin
+  AbrirCadastroDeCidade(topEditar);
 end;
 
 procedure TfrmListarCidade.ExcluirCidade;
 begin
   if DM.qryCidade.IsEmpty then
+    Exit;
+
+  if (not Pergunta('Deseja realmente excluir a cidade?')) then
     Exit;
 
   DM.qryCidade.Delete;
@@ -67,7 +78,7 @@ end;
 procedure TfrmListarCidade.FormActivate(Sender: TObject);
 begin
   AtivarQuery(DM.qryCidade, topAbrir);
-  ControlarVisibilidadeDoBotaoExcluir;
+  ControlarVisibilidadeDosBotoes;
 end;
 
 procedure TfrmListarCidade.FormClose(Sender: TObject; var Action: TCloseAction);

@@ -14,6 +14,7 @@ object frmCidade: TfrmCidade
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlCidade: TPanel
@@ -26,7 +27,7 @@ object frmCidade: TfrmCidade
     object lblNome: TLabel
       Left = 6
       Top = 8
-      Width = 35
+      Width = 27
       Height = 13
       Caption = 'Nome'
     end
@@ -51,6 +52,7 @@ object frmCidade: TfrmCidade
       Top = 23
       Width = 65
       Height = 21
+      Style = csDropDownList
       DataField = 'uf'
       DataSource = DM.dsrCidade
       Items.Strings = (
@@ -69,9 +71,7 @@ object frmCidade: TfrmCidade
     Align = alRight
     Caption = '&Gravar'
     TabOrder = 1
-    ExplicitLeft = 408
-    ExplicitTop = 97
-    ExplicitHeight = 32
+    OnClick = btnGravarClick
   end
   object btnCancelar: TBitBtn
     Left = 408
@@ -81,7 +81,6 @@ object frmCidade: TfrmCidade
     Align = alRight
     Caption = '&Cancelar'
     TabOrder = 2
-    ExplicitTop = 97
-    ExplicitHeight = 32
+    OnClick = btnCancelarClick
   end
 end
