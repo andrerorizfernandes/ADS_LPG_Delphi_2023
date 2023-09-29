@@ -12,6 +12,8 @@ object frmListarCliente: TfrmListarCliente
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnActivate = FormActivate
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTitulo: TPanel
@@ -36,6 +38,7 @@ object frmListarCliente: TfrmListarCliente
     Width = 774
     Height = 366
     Align = alClient
+    DataSource = DM.dsrCliente
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -49,6 +52,47 @@ object frmListarCliente: TfrmListarCliente
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = [fsBold]
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'codcliente'
+        Title.Caption = 'C'#243'digo'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'nome'
+        Title.Caption = 'Nome'
+        Width = 260
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'idade'
+        Title.Caption = 'Idade'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'cpf'
+        Title.Caption = 'Cpf'
+        Width = 119
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'cidade'
+        Title.Caption = 'Cidade'
+        Width = 179
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'uf'
+        Title.Caption = 'Uf'
+        Width = 39
+        Visible = True
+      end>
   end
   object pnlBotoes: TPanel
     Left = 0
@@ -69,8 +113,7 @@ object frmListarCliente: TfrmListarCliente
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
-      ExplicitLeft = 678
-      ExplicitTop = 6
+      OnClick = btnExcluirClick
     end
     object btnInserir: TBitBtn
       Left = 485
@@ -95,8 +138,6 @@ object frmListarCliente: TfrmListarCliente
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
-      ExplicitLeft = 575
-      ExplicitTop = 6
     end
   end
 end

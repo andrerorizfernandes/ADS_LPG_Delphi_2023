@@ -8,7 +8,8 @@ uses
   uFuncoes in 'uFuncoes.pas',
   uCidade in 'uCidade.pas' {frmCidade},
   uTipoOperacao in 'uTipoOperacao.pas',
-  uListarCliente in 'uListarCliente.pas' {frmListarCliente};
+  uListarCliente in 'uListarCliente.pas' {frmListarCliente},
+  uCliente in 'uCliente.pas' {frmCliente};
 
 {$R *.res}
 
