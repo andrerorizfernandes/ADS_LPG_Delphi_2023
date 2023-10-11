@@ -3,7 +3,7 @@ unit uListarCidade;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, uCidade, uTipoOperacao;
 
@@ -21,10 +21,13 @@ type
     procedure btnInserirClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
     procedure dbgListarCidadeDblClick(Sender: TObject);
+    procedure dbgListarCidadeDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     procedure ExcluirCidade;
     procedure ControlarVisibilidadeDosBotoes;
     procedure AbrirCadastroDeCidade(const pTipoOperacao: TTipoOperacao);
+    function ExisteClienteParaACidade(const pCodigoCidade: Integer): Boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -34,7 +37,7 @@ implementation
 
 {$R *.dfm}
 
-uses uDM, uFuncoes;
+uses uDM, uFuncoes, System.SysUtils;
 
 procedure TfrmListarCidade.btnEditarClick(Sender: TObject);
 begin
@@ -43,6 +46,12 @@ end;
 
 procedure TfrmListarCidade.btnExcluirClick(Sender: TObject);
 begin
+  if ExisteClienteParaACidade(DM.qryCidadecodcidade.Value) then
+  begin
+    Alerta('A cidade ' + DM.qryCidadenome.Value + ' está sendo utilizado por algum cliente');
+    Exit;
+  end;
+
   ExcluirCidade;
   ControlarVisibilidadeDosBotoes;
 end;
@@ -64,6 +73,12 @@ begin
   AbrirCadastroDeCidade(topEditar);
 end;
 
+procedure TfrmListarCidade.dbgListarCidadeDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  ZebrarGrid(Sender, DM.qryCidade, Rect, Column, State);
+end;
+
 procedure TfrmListarCidade.ExcluirCidade;
 begin
   if DM.qryCidade.IsEmpty then
@@ -73,6 +88,22 @@ begin
     Exit;
 
   DM.qryCidade.Delete;
+end;
+
+function TfrmListarCidade.ExisteClienteParaACidade(const pCodigoCidade: Integer): Boolean;
+const
+  SQL_PESQUISA = 'Select codcliente From cliente WHERE codcidade=%s';
+begin
+  try
+    DM.qryAuxiliar.Close;
+    DM.qryAuxiliar.SQL.Text := Format(SQL_PESQUISA, [pCodigoCidade.ToString]);
+    DM.qryAuxiliar.Open;
+
+    Result := (not DM.qryAuxiliar.IsEmpty);
+  finally
+    DM.qryAuxiliar.SQL.Clear;
+    DM.qryAuxiliar.Close;
+  end;
 end;
 
 procedure TfrmListarCidade.FormActivate(Sender: TObject);

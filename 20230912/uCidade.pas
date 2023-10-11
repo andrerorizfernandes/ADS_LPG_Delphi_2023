@@ -31,9 +31,6 @@ type
     { Public declarations }
   end;
 
-var
-  frmCidade: TfrmCidade;
-
 implementation
 
 {$R *.dfm}

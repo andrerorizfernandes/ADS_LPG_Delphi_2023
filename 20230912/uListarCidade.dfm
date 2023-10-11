@@ -101,6 +101,7 @@ object frmListarCidade: TfrmListarCidade
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = [fsBold]
+    OnDrawColumnCell = dbgListarCidadeDrawColumnCell
     OnDblClick = dbgListarCidadeDblClick
     Columns = <
       item

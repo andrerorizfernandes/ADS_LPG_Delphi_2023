@@ -3,7 +3,7 @@ unit uFuncoes;
 interface
 
 uses
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, Winapi.Windows, Vcl.DBGrids, Vcl.Grids;
 
 const
   NOME_SISTEMA = 'ERP de vendas';
@@ -15,13 +15,14 @@ procedure AtivarQuery(const pQuery: TFDQuery; const pTipoOperacaoDaQuery: TOpera
 procedure Alerta(Mensagem: string);
 procedure Informacao(Mensagem: string);
 procedure Erro(Mensagem : string);
+procedure ZebrarGrid(Sender, DataSet: TObject; Rect: TRect; Column: TColumn;State: TGridDrawState);
 
 function Pergunta(Pergunta: string): Boolean;
 
 implementation
 
 uses
-  Vcl.Forms, Winapi.Windows;
+  Vcl.Forms, Data.DB, Vcl.Graphics;
 
 procedure AtivarQuery(const pQuery: TFDQuery; const pTipoOperacaoDaQuery: TOperacaoDaQuery);
 begin
@@ -52,6 +53,40 @@ begin
     Result := True
   else
     Result := False;
+end;
+
+procedure ZebrarGrid(Sender, DataSet: TObject; Rect: TRect; Column: TColumn; State: TGridDrawState);
+begin
+  if not (DataSet as TDataSet).Active  then Exit;
+  if     (DataSet as TDataSet).IsEmpty then Exit;
+
+  if not Odd((DataSet as TDataSet).RecNo) then // se for ímpar
+  // se a célula não está selecionada
+    if not (gdSelected in State) then
+    begin
+      // define a cor de fundo
+      (Sender as TDBGrid).Canvas.Brush.Color := cl3DLight;
+      (Sender as TDBGrid).Canvas.FillRect(Rect);//pinta a célula
+      // pinta o texto padrão
+      (Sender as TDBGrid).DefaultDrawDataCell(rect,column.Field,State);
+    end
+    else
+    begin
+      // define a cor de fundo
+      (Sender as TDBGrid).Canvas.Brush.Color := $00CFB78F;
+      (Sender as TDBGrid).Canvas.FillRect(Rect);//pinta a célula
+      // pinta o texto padrão
+      (Sender as TDBGrid).DefaultDrawDataCell(rect,column.Field,State);
+    end
+    else
+    if (gdSelected in State) then
+    begin
+      // define a cor de fundo
+      (Sender as TDBGrid).Canvas.Brush.Color := $00CFB78F;
+      (Sender as TDBGrid).Canvas.FillRect(Rect);//pinta a célula
+      // pinta o texto padrão
+      (Sender as TDBGrid).DefaultDrawDataCell(rect,column.Field,State);
+    end;
 end;
 
 end.

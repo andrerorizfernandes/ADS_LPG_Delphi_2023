@@ -14,6 +14,7 @@ object frmCliente: TfrmCliente
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlCliente: TPanel
@@ -51,6 +52,13 @@ object frmCliente: TfrmCliente
       Height = 13
       Caption = 'Cidade'
     end
+    object lblUf: TLabel
+      Left = 539
+      Top = 58
+      Width = 13
+      Height = 13
+      Caption = 'UF'
+    end
     object dbeNome: TDBEdit
       Left = 6
       Top = 23
@@ -81,14 +89,25 @@ object frmCliente: TfrmCliente
     object dblCidade: TDBLookupComboBox
       Left = 6
       Top = 77
-      Width = 576
+      Width = 526
       Height = 21
       DataField = 'codcidade'
       DataSource = DM.dsrCliente
       KeyField = 'codcidade'
-      ListField = 'nome'
+      ListField = 'nome;uf'
       ListSource = DM.dsrCidade
       TabOrder = 3
+    end
+    object dbeUf: TDBEdit
+      Left = 536
+      Top = 77
+      Width = 46
+      Height = 21
+      TabStop = False
+      DataField = 'uf'
+      DataSource = DM.dsrCidade
+      Enabled = False
+      TabOrder = 4
     end
   end
   object btnGravar: TBitBtn
@@ -99,9 +118,7 @@ object frmCliente: TfrmCliente
     Align = alRight
     Caption = '&Gravar'
     TabOrder = 1
-    ExplicitLeft = 304
-    ExplicitTop = 57
-    ExplicitHeight = 28
+    OnClick = btnGravarClick
   end
   object btnCancelar: TBitBtn
     Left = 488
@@ -111,8 +128,6 @@ object frmCliente: TfrmCliente
     Align = alRight
     Caption = '&Cancelar'
     TabOrder = 2
-    ExplicitLeft = 353
-    ExplicitTop = 57
-    ExplicitHeight = 28
+    OnClick = btnCancelarClick
   end
 end

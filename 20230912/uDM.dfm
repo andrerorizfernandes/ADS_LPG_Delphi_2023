@@ -201,4 +201,10 @@ object DM: TDM
     Left = 168
     Top = 144
   end
+  object qryAuxiliar: TFDQuery
+    CachedUpdates = True
+    Connection = Conexao
+    Left = 232
+    Top = 96
+  end
 end

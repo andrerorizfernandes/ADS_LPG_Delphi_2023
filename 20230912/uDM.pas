@@ -39,6 +39,7 @@ type
     qryVendanome_cliente: TStringField;
     qryVendacidade_cliente: TStringField;
     qryVendauf_cliente: TStringField;
+    qryAuxiliar: TFDQuery;
   private
     { Private declarations }
   public

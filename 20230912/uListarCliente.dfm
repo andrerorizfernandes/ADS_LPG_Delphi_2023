@@ -1,6 +1,7 @@
 object frmListarCliente: TfrmListarCliente
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   ClientHeight = 428
   ClientWidth = 774
@@ -52,6 +53,8 @@ object frmListarCliente: TfrmListarCliente
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = [fsBold]
+    OnDrawColumnCell = dbgListarClienteDrawColumnCell
+    OnDblClick = dbgListarClienteDblClick
     Columns = <
       item
         Expanded = False
@@ -126,6 +129,7 @@ object frmListarCliente: TfrmListarCliente
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
+      OnClick = btnInserirClick
     end
     object btnEditar: TBitBtn
       Left = 581
@@ -138,6 +142,7 @@ object frmListarCliente: TfrmListarCliente
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
+      OnClick = btnEditarClick
     end
   end
 end
