@@ -9,7 +9,9 @@ uses
   uCidade in 'uCidade.pas' {frmCidade},
   uTipoOperacao in 'uTipoOperacao.pas',
   uListarCliente in 'uListarCliente.pas' {frmListarCliente},
-  uCliente in 'uCliente.pas' {frmCliente};
+  uCliente in 'uCliente.pas' {frmCliente},
+  uListarVenda in 'uListarVenda.pas' {frmListarVenda},
+  uVenda in 'uVenda.pas' {frmVenda};
 
 {$R *.res}
 

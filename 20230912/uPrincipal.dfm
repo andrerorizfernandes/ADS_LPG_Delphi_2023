@@ -2858,6 +2858,10 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'C&liente'
         OnClick = Cliente1Click
       end
+      object Venda2: TMenuItem
+        Caption = '&Venda'
+        OnClick = Venda2Click
+      end
     end
     object Operaes1: TMenuItem
       Caption = '&Opera'#231#245'es'

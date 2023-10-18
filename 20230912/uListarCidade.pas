@@ -48,7 +48,7 @@ procedure TfrmListarCidade.btnExcluirClick(Sender: TObject);
 begin
   if ExisteClienteParaACidade(DM.qryCidadecodcidade.Value) then
   begin
-    Alerta('A cidade ' + DM.qryCidadenome.Value + ' está sendo utilizado por algum cliente');
+    Alerta('A cidade ' + DM.qryCidadenome.AsString + ' está sendo utilizado por algum cliente');
     Exit;
   end;
 

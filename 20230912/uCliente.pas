@@ -98,7 +98,7 @@ end;
 
 procedure TfrmCliente.ValidarDados;
 begin
-  if DM.qryCliente.State in [dsBrowse] then
+  if (RetornaTipoDeOperacaoDaQuery(DM.qryCliente) = topNavegar) then
   begin
     Alerta('Não foi definida se a operação é de inserção ou edição');
     Abort;

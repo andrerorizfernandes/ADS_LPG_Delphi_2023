@@ -150,6 +150,7 @@ object DM: TDM
       FieldName = 'valor'
       Origin = 'valor'
       Required = True
+      currency = True
       Precision = 20
       Size = 6
     end

@@ -127,6 +127,14 @@
             <Form>frmCliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="uListarVenda.pas">
+            <Form>frmListarVenda</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uVenda.pas">
+            <Form>frmVenda</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -3,7 +3,7 @@ unit uFuncoes;
 interface
 
 uses
-  FireDAC.Comp.Client, Winapi.Windows, Vcl.DBGrids, Vcl.Grids;
+  FireDAC.Comp.Client, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, uTipoOperacao;
 
 const
   NOME_SISTEMA = 'ERP de vendas';
@@ -18,6 +18,7 @@ procedure Erro(Mensagem : string);
 procedure ZebrarGrid(Sender, DataSet: TObject; Rect: TRect; Column: TColumn;State: TGridDrawState);
 
 function Pergunta(Pergunta: string): Boolean;
+function RetornaTipoDeOperacaoDaQuery(const pQuery: TFDQuery): TTipoOperacao;
 
 implementation
 
@@ -87,6 +88,17 @@ begin
       // pinta o texto padrão
       (Sender as TDBGrid).DefaultDrawDataCell(rect,column.Field,State);
     end;
+end;
+
+function RetornaTipoDeOperacaoDaQuery(const pQuery: TFDQuery): TTipoOperacao;
+begin
+  case pQuery.State of
+    dsBrowse: Result := topNavegar;
+    dsEdit: Result := topEditar;
+    dsInsert: Result := topInserir
+    else
+      Result := topNenhum;
+  end;
 end;
 
 end.

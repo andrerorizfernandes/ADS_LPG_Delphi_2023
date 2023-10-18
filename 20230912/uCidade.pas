@@ -92,7 +92,7 @@ end;
 
 procedure TfrmCidade.ValidarDados;
 begin
-  if DM.qryCidade.State in [dsBrowse] then
+  if (RetornaTipoDeOperacaoDaQuery(DM.qryCidade) = topNavegar) then
   begin
     Alerta('Não foi definida se a operação é de inserção ou edição');
     Abort;

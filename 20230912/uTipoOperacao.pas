@@ -3,7 +3,7 @@ unit uTipoOperacao;
 interface
 
 type
-  TTipoOperacao = (topInserir, topEditar);
+  TTipoOperacao = (topNenhum, topInserir, topEditar, topNavegar);
 
 implementation
 
