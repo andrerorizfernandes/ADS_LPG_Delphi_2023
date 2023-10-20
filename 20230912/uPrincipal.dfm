@@ -2869,5 +2869,12 @@ object frmPrincipal: TfrmPrincipal
         Caption = '&Venda'
       end
     end
+    object Utilitrios1: TMenuItem
+      Caption = '&Utilit'#225'rios'
+      object Pesquisa1: TMenuItem
+        Caption = '&Pesquisa'
+        OnClick = Pesquisa1Click
+      end
+    end
   end
 end

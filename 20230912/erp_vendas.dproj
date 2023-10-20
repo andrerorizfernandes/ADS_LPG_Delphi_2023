@@ -135,6 +135,10 @@
             <Form>frmVenda</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="uPesquisa.pas">
+            <Form>frmPesquisa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

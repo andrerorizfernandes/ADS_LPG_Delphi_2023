@@ -11,7 +11,8 @@ uses
   uListarCliente in 'uListarCliente.pas' {frmListarCliente},
   uCliente in 'uCliente.pas' {frmCliente},
   uListarVenda in 'uListarVenda.pas' {frmListarVenda},
-  uVenda in 'uVenda.pas' {frmVenda};
+  uVenda in 'uVenda.pas' {frmVenda},
+  uPesquisa in 'uPesquisa.pas' {frmPesquisa};
 
 {$R *.res}
 

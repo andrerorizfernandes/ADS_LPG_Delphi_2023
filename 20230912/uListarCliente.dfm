@@ -105,6 +105,7 @@ object frmListarCliente: TfrmListarCliente
     Hint = 'Clique aqui para excluir a cidade'
     Align = alBottom
     TabOrder = 2
+    ExplicitTop = 405
     object btnExcluir: TBitBtn
       Left = 677
       Top = 1

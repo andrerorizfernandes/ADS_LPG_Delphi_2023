@@ -205,7 +205,18 @@ object DM: TDM
   object qryAuxiliar: TFDQuery
     CachedUpdates = True
     Connection = Conexao
-    Left = 232
+    Left = 320
     Top = 96
+  end
+  object qryPesquisa: TFDQuery
+    CachedUpdates = True
+    Connection = Conexao
+    Left = 240
+    Top = 96
+  end
+  object dsrPesquisa: TDataSource
+    DataSet = qryPesquisa
+    Left = 240
+    Top = 144
   end
 end

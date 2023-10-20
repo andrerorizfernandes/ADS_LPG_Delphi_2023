@@ -40,6 +40,8 @@ type
     qryVendacidade_cliente: TStringField;
     qryVendauf_cliente: TStringField;
     qryAuxiliar: TFDQuery;
+    qryPesquisa: TFDQuery;
+    dsrPesquisa: TDataSource;
   private
     { Private declarations }
   public
