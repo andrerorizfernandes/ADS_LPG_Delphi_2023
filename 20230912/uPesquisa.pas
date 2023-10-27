@@ -5,7 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient, ppCtrls, ppDB, ppPrnabl,
+  ppClass, ppBands, ppCache, ppDesignLayer, ppParameter, ppProd, ppReport,
+  ppComm, ppRelatv, ppDBPipe, ppVar;
 
 type
   TfrmPesquisa = class(TForm)
@@ -23,10 +25,31 @@ type
     lblTipoOperacao: TLabel;
     lblValor: TLabel;
     btnPesquisar: TBitBtn;
+    lblQuantidadeRegistros: TLabel;
+    dppRelatorio: TppDBPipeline;
+    ppRelatorio: TppReport;
+    ppParameterList1: TppParameterList;
+    ppDesignLayers1: TppDesignLayers;
+    ppDesignLayer1: TppDesignLayer;
+    ppHeaderBand1: TppHeaderBand;
+    ppDetailBand1: TppDetailBand;
+    ppFooterBand1: TppFooterBand;
+    dbtCodigo: TppDBText;
+    dbtCidade: TppDBText;
+    dbtUf: TppDBText;
+    ppLabel1: TppLabel;
+    ppLabel2: TppLabel;
+    ppLabel3: TppLabel;
+    ppLabel4: TppLabel;
+    ppLine1: TppLine;
+    ppSystemVariable1: TppSystemVariable;
     procedure rdgTipoPesquisaClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure dbgPesquisaDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure edtValorKeyPress(Sender: TObject; var Key: Char);
+    procedure btnExportarClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
   private
     function SqlPorEntidade: string;
     procedure ControlarVisibilidadeDosParametrosDePesquisa;
@@ -34,6 +57,9 @@ type
     procedure MontarEstruturaComTipoDePesquisa;
     procedure PreencherCampos;
     procedure Pesquisar;
+    procedure QuantidadeRegistros;
+    procedure ExportarDados;
+    procedure ImprimirRelatorio;
     { Private declarations }
   public
     { Public declarations }
@@ -50,6 +76,16 @@ const
   SQL_VENDA = 'SELECT v.codvenda, v.descricao, v.quantidade, v.valor FROM venda v';
 
 {$R *.dfm}
+
+procedure TfrmPesquisa.btnExportarClick(Sender: TObject);
+begin
+  ExportarDados;
+end;
+
+procedure TfrmPesquisa.btnImprimirClick(Sender: TObject);
+begin
+  ImprimirRelatorio;
+end;
 
 procedure TfrmPesquisa.btnPesquisarClick(Sender: TObject);
 begin
@@ -68,6 +104,40 @@ begin
   ZebrarGrid(dbgPesquisa, DM.qryPesquisa, Rect, Column, State);
 end;
 
+procedure TfrmPesquisa.edtValorKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then
+  begin
+    ValidarParametrosDePesquisa;
+    Pesquisar;
+  end;
+end;
+
+procedure TfrmPesquisa.ExportarDados;
+begin
+  if DM.qryPesquisa.IsEmpty then
+    Exit;
+
+  ExportarDBGrid(dbgPesquisa);
+end;
+
+procedure TfrmPesquisa.ImprimirRelatorio;
+begin
+  case rdgTipoPesquisa.ItemIndex of
+    0:
+    begin
+      ppRelatorio.Template.FileName := 'C:\Users\andre\Downloads\ADS_LPG_Delphi_2023\20230912\Report\Rel_Cidade.rtm';
+      ppRelatorio.Template.LoadFromFile;
+      dbtCodigo.DataField := 'codcidade';
+      dbtCidade.DataField := 'nome';
+      dbtUf.DataField := 'uf';
+      ppRelatorio.Print;
+    end;
+
+
+  end;
+end;
+
 procedure TfrmPesquisa.MontarEstruturaComTipoDePesquisa;
 begin
   DM.qryPesquisa.Close;
@@ -84,8 +154,6 @@ procedure TfrmPesquisa.Pesquisar;
 var
   lSql: string;
 begin
-
-
   DM.qryPesquisa.Close;
   DM.qryPesquisa.SQL.Clear;
   case cboTipoOperacao.ItemIndex of
@@ -95,7 +163,12 @@ begin
     3: DM.qryPesquisa.SQL.Add(SqlPorEntidade + ' WHERE ' + cboCampo.Text + ' like ' + QuotedStr('%' + edtValor.Text));
     4: DM.qryPesquisa.SQL.Add(SqlPorEntidade + ' WHERE ' + cboCampo.Text + ' like ' + QuotedStr('%' + edtValor.Text + '%'));
   end;
-  DM.qryPesquisa.Open;
+  try
+    DM.qryPesquisa.Open;
+    QuantidadeRegistros;
+  except
+    Erro('Erro ao realizar pesquisa');
+  end;
 end;
 
 procedure TfrmPesquisa.PreencherCampos;
@@ -108,6 +181,15 @@ begin
   cboCampo.Items.Clear;
   for I := 0 to DM.qryPesquisa.Fields.Count - 1 do
     cboCampo.Items.Add(DM.qryPesquisa.Fields[I].FieldName);
+
+  cboCampo.SetFocus;
+end;
+
+procedure TfrmPesquisa.QuantidadeRegistros;
+const
+  INFORMACAO = '%d registros ';
+begin
+  lblQuantidadeRegistros.Caption := Format(INFORMACAO, [DM.qryPesquisa.RecordCount]);
 end;
 
 procedure TfrmPesquisa.rdgTipoPesquisaClick(Sender: TObject);
