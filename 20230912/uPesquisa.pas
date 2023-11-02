@@ -5,9 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient, ppCtrls, ppDB, ppPrnabl,
-  ppClass, ppBands, ppCache, ppDesignLayer, ppParameter, ppProd, ppReport,
-  ppComm, ppRelatv, ppDBPipe, ppVar;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient;
 
 type
   TfrmPesquisa = class(TForm)
@@ -26,23 +24,6 @@ type
     lblValor: TLabel;
     btnPesquisar: TBitBtn;
     lblQuantidadeRegistros: TLabel;
-    dppRelatorio: TppDBPipeline;
-    ppRelatorio: TppReport;
-    ppParameterList1: TppParameterList;
-    ppDesignLayers1: TppDesignLayers;
-    ppDesignLayer1: TppDesignLayer;
-    ppHeaderBand1: TppHeaderBand;
-    ppDetailBand1: TppDetailBand;
-    ppFooterBand1: TppFooterBand;
-    dbtCodigo: TppDBText;
-    dbtCidade: TppDBText;
-    dbtUf: TppDBText;
-    ppLabel1: TppLabel;
-    ppLabel2: TppLabel;
-    ppLabel3: TppLabel;
-    ppLabel4: TppLabel;
-    ppLine1: TppLine;
-    ppSystemVariable1: TppSystemVariable;
     procedure rdgTipoPesquisaClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure dbgPesquisaDrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -123,7 +104,7 @@ end;
 
 procedure TfrmPesquisa.ImprimirRelatorio;
 begin
-  case rdgTipoPesquisa.ItemIndex of
+  {case rdgTipoPesquisa.ItemIndex of
     0:
     begin
       ppRelatorio.Template.FileName := 'C:\Users\andre\Downloads\ADS_LPG_Delphi_2023\20230912\Report\Rel_Cidade.rtm';
@@ -133,9 +114,7 @@ begin
       dbtUf.DataField := 'uf';
       ppRelatorio.Print;
     end;
-
-
-  end;
+  end;}
 end;
 
 procedure TfrmPesquisa.MontarEstruturaComTipoDePesquisa;
